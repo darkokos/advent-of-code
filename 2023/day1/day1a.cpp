@@ -24,6 +24,8 @@ int solve_day_1_a() {
         sum += (line[0] - '0') * 10 + line[line.length() - 1] - '0';
     }
 
+    stream.close();
+
     cout << sum << endl;
     return 0;
 }

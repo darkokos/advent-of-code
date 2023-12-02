@@ -7,13 +7,11 @@
 #include <fstream>
 #include <string>
 #include <algorithm>
-#include <map>
-#include <chrono>
+#include <unordered_map>
 
 using namespace std;
-using namespace chrono;
 
-const map<const string, const int> digit_word_to_digit {
+const unordered_map<string, const int> digit_word_to_digit {
     { "one", 1 },
     { "two", 2 },
     { "three", 3 },
@@ -72,6 +70,8 @@ int solve_day_1_b() {
         sum += get_first_digit_from_string(line) * 10
                + get_last_digit_from_string(line);
     }
+
+    stream.close();
 
     cout << sum << endl;
     return 0;
