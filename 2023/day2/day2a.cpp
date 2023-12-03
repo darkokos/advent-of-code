@@ -7,22 +7,11 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <vector>
 #include <unordered_map>
 
 using namespace std;
 
-const unordered_map<string, int> colour_count {
-        { "red", 12 },
-        { "green", 13 },
-        { "blue", 14 },
-};
-stringstream ss;
-string line;
-int number;
-string colour;
-
-bool could_pull_happen() {
+bool could_pull_happen(int& number, string& colour, const unordered_map<string, const int>& colour_count) {
     stringstream pull_ss(line);
 
     while (getline(pull_ss, line, ',')) {
@@ -36,12 +25,13 @@ bool could_pull_happen() {
     return true;
 }
 
-bool could_game_happen() {
+bool could_game_happen(stringstream& ss, int& number, string& colour,
+                       const unordered_map<string, const int>& colour_count) {
     ss.clear();
     ss.str(line);
 
     while (getline(ss, line, ';')) {
-        if (!could_pull_happen())
+        if (!could_pull_happen(number, colour, colour_count))
             return false;
     }
 
@@ -56,6 +46,14 @@ int solve_day_2_a() {
     }
 
     string game;
+    stringstream ss;
+    int number;
+    string colour;
+    const unordered_map<string, const int> colour_count {
+            { "red", 12 },
+            { "green", 13 },
+            { "blue", 14 },
+    };
     int game_num;
     int sum = 0;
     while (getline(stream, line)) {
@@ -64,7 +62,7 @@ int solve_day_2_a() {
         getline(ss, game, ':');
         getline(ss, line, ':');
 
-        if (could_game_happen()) {
+        if (could_game_happen(ss, number, colour, colour_count)) {
             ss.clear();
             ss.str(game);
             ss >> line;
